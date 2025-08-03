@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Page Analyzer</title>
+    <!-- Import a modern, clean font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- CSS Variables for Easy Theming --- */
+        :root {
+            --bg-color: #181825; /* A deep, cool-toned dark background */
+            --ui-bg: #2a2a3e; /* A slightly lighter background for UI elements */
+            --text-color: #f0f8ff; /* AliceBlue - a soft, readable white */
+            --text-muted: #a0a0c0; /* A muted color for placeholders and hints */
+            --accent-gradient: linear-gradient(45deg, #7e57c2, #42a5f5);
+            --shadow-color: rgba(0, 0, 0, 0.4);
+            --font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --border-radius: 12px;
+        }
+
+        /* --- General Body Styles --- */
+        body {
+            font-family: var(--font-family);
+            width: 320px;
+            padding: 20px;
+            background: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            gap: 16px; /* Creates consistent spacing between all elements */
+        }
+
+        /* --- Header Styling --- */
+        h2 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0;
+            color: #fff;
+            /* background: var(--accent-gradient); */
+            /* -webkit-text-fill-color: transparent; */
+        }
+        
+        /* --- Textarea Styling --- */
+        #prompt {
+            background: var(--ui-bg);
+            color: var(--text-color);
+            border: 1px solid transparent;
+            border-radius: var(--border-radius);
+            padding: 12px;
+            font-size: 14px;
+            font-family: var(--font-family);
+            box-shadow: 0 4px 15px var(--shadow-color);
+            resize: none; /* Prevents user resizing */
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        #prompt:focus {
+            outline: none;
+            border-color: #42a5f5; /* Use a color from the gradient for focus */
+            box-shadow: 0 0 0 3px rgba(66, 165, 245, 0.3);
+        }
+
+        #prompt::placeholder {
+            color: var(--text-muted);
+            opacity: 1;
+        }
+
+        /* --- Button Styling --- */
+        #analyzeBtn {
+            background: var(--accent-gradient);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            padding: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 15px var(--shadow-color);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+        }
+
+        #analyzeBtn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--shadow-color);
+        }
+
+        #analyzeBtn:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        #analyzeBtn:disabled {
+            filter: saturate(0.5) brightness(0.8);
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        
+        /* --- Result Box Styling --- */
+        #result {
+            background: var(--ui-bg);
+            color: var(--text-color);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--border-radius);
+            padding: 12px;
+            min-height: 120px;
+            max-height: 280px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            font-size: 13px;
+            line-height: 1.6;
+            box-shadow: 0 4px 15px var(--shadow-color);
+        }
+
+        /* A specific class for the initial placeholder text */
+        .placeholder-text {
+            color: var(--text-muted);
+            font-style: italic;
+            opacity: 0.5;
+        }
+
+        /* --- Custom Scrollbar Styling (for WebKit browsers like Chrome/Safari) --- */
+        #result::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #result::-webkit-scrollbar-track {
+            background: var(--bg-color);
+            border-radius: 4px;
+        }
+
+        #result::-webkit-scrollbar-thumb {
+            background: var(--accent-gradient);
+            border-radius: 4px;
+        }
+
+        #result::-webkit-scrollbar-thumb:hover {
+            filter: brightness(1.2);
+        }
+    </style>
+</head>
+<body>
+    <h2>
+        Page Analyzer
+    </h2>
+    <textarea id="prompt" rows="3" placeholder="e.g., Summarize this page in three bullet points..."></textarea>
+    <button id="analyzeBtn">Analyze</button>
+    <div id="result" style="display: none;"></div>
+
+    <script src="popup.js"></script>
+</body>
+</html>
